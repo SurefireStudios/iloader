@@ -1,24 +1,51 @@
+/* ==========================================================================
+   Certificate table
+   ========================================================================== */
+
 .certificate-table-container {
   overflow-x: auto;
   width: 100%;
+  border: 1px solid var(--line-faint);
+  border-radius: var(--r-md);
+  background: var(--surface-sunken);
+  box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.25);
 }
 
 .certificate-table {
   border-collapse: collapse;
   width: 100%;
-  padding: 0.5em;
+  font-size: 0.88rem;
 }
 
 .certificate-table td,
 .certificate-table th {
-  padding: 0.65em 1em;
+  padding: 0.62em 1em;
   text-align: left;
+  white-space: nowrap;
+}
+
+/* Column headings are labels, not content — they should not compete with the
+   rows for attention. */
+.certificate-table th {
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.11em;
+  text-transform: uppercase;
+  color: var(--text-tertiary);
+  background: rgba(255, 255, 255, 0.03);
+  border-bottom: 1px solid var(--line);
+  position: sticky;
+  top: 0;
 }
 
 .certificate-item {
-  border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+  border-bottom: 1px solid var(--line-faint);
   margin: 0;
-  padding: 0.5em;
+  transition: background var(--dur-fast) var(--ease);
+}
+
+.certificate-item:hover {
+  background: rgba(255, 255, 255, 0.028);
 }
 
 .cert-item-last {
@@ -26,22 +53,45 @@
 }
 
 .cert-item-part {
-  border-right: 1px solid rgba(255, 255, 255, 0.08);
-  padding-right: 0.5em;
+  border-right: 1px solid var(--line-faint);
+  color: var(--text-secondary);
+}
+
+.certificate-item td:first-child {
+  color: var(--text-primary);
+  font-weight: 550;
+}
+
+/* Serial numbers are identifiers — monospace makes them scannable and stops
+   them from being mistaken for prose. */
+.certificate-item td:nth-child(2) {
+  font-family: var(--font-mono);
+  font-size: 0.82rem;
+  letter-spacing: 0.02em;
 }
 
 .cert-item-revoke {
   cursor: pointer;
   color: var(--danger);
   font-weight: 600;
+  transition: color var(--dur) var(--ease);
+}
+
+.cert-item-revoke:hover {
+  color: #ff9d96;
+  text-decoration: underline;
+  text-underline-offset: 3px;
 }
 
 .pairing-place {
   cursor: pointer;
-  color: var(--accent-primary);
+  color: var(--brand-400);
   font-weight: 600;
+  transition: color var(--dur) var(--ease);
 }
 
-.cert-item-revoke:hover {
-  color: #ffbb9c;
+.pairing-place:hover {
+  color: var(--brand-300);
+  text-decoration: underline;
+  text-underline-offset: 3px;
 }

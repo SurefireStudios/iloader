@@ -1,7 +1,9 @@
+/* ==========================================================================
+   Modal
+   ========================================================================== */
+
 .modal-container {
   position: fixed;
-  backdrop-filter: blur(24px) saturate(180%);
-  -webkit-backdrop-filter: blur(24px) saturate(180%);
   top: 0;
   left: 0;
   bottom: 0;
@@ -9,73 +11,124 @@
   display: flex;
   align-items: center;
   justify-content: center;
+  padding: 2rem;
   z-index: 1000;
+
+  /* A dark scrim under the blur. Blur alone leaves the dialog floating on a
+     smear of the page; the scrim is what makes it sit in front of it. */
+  background: rgba(4, 5, 6, 0.55);
+  backdrop-filter: blur(20px) saturate(150%);
+  -webkit-backdrop-filter: blur(20px) saturate(150%);
+  animation: modal-scrim-in 180ms cubic-bezier(0.32, 0.72, 0, 1);
+}
+
+@keyframes modal-scrim-in {
+  from {
+    opacity: 0;
+  }
 }
 
 .modal {
-  background: var(--glass-surface-alt);
-  border-radius: 24px;
-  border: 1px solid var(--glass-border);
-  box-shadow: 0 35px 65px rgba(0, 0, 0, 0.65);
-  padding: 2em;
+  background:
+    linear-gradient(
+      180deg,
+      rgba(255, 255, 255, 0.055),
+      rgba(255, 255, 255, 0.022)
+    ),
+    rgba(16, 17, 20, 0.92);
+  border-radius: var(--r-xl);
+  border: 1px solid var(--line);
+  box-shadow: var(--edge-light), var(--shadow-xl);
+  padding: 1.75rem;
   max-width: 95vw;
   max-height: 90vh;
   box-sizing: border-box;
   position: relative;
   color: inherit;
+  animation: modal-in 220ms cubic-bezier(0.32, 0.72, 0, 1);
 }
 
+/* Rises and settles rather than appearing. */
+@keyframes modal-in {
+  from {
+    opacity: 0;
+    transform: translateY(10px) scale(0.985);
+  }
+}
+
+.modal h2 {
+  margin-top: 0;
+  font-size: 1.15rem;
+  font-weight: 650;
+}
+
+/* Sits in the modal's padding band. Headers whose own content reaches the
+   right edge (the log viewer, the error dialog) reserve room for it. */
 .modal-close {
-  font-size: 1.5rem;
+  font-size: 0.95rem;
   position: absolute;
-  top: 5px;
-  right: 5px;
+  top: 0.5rem;
+  right: 0.5rem;
   margin: 0;
-  width: 1.7rem;
-  height: 1.7rem;
-  text-align: center;
-  line-height: 1.7rem;
-  background-color: transparent !important;
+  width: 1.9rem;
+  height: 1.9rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  line-height: 1;
+  border-radius: 50%;
+  background: var(--surface-2) !important;
   box-shadow: none;
-  border: none;
+  border: 1px solid var(--line-faint);
   padding: 0;
-  color: #fff;
+  color: var(--text-secondary);
+  z-index: 2;
+}
+
+.modal-close:hover:not(:disabled) {
+  background: var(--surface-3) !important;
+  color: var(--text-primary);
+  border-color: var(--line-strong);
+  transform: none;
 }
 
 .modal-circles {
   position: absolute;
-  bottom: 15px;
+  bottom: 1rem;
   left: 0;
   right: 0;
   display: flex;
   justify-content: center;
-  gap: 0.5rem;
+  gap: 0.4rem;
 }
 
 .modal-next {
   position: absolute;
-  bottom: 15px;
-  right: 15px;
+  bottom: 1rem;
+  right: 1rem;
 }
 
 .modal-prev {
   position: absolute;
-  bottom: 15px;
-  left: 15px;
+  bottom: 1rem;
+  left: 1rem;
 }
 
 .page-circle {
-  width: 0.5rem;
-  height: 0.5rem;
-  border-radius: 50%;
-  background-color: #fff6;
-  transition: all 0.2s;
+  width: 0.45rem;
+  height: 0.45rem;
+  border-radius: var(--r-full);
+  background-color: rgba(255, 255, 255, 0.22);
+  transition: all var(--dur) var(--ease);
   align-self: center;
   position: relative;
 }
 
+/* The current page stretches into a capsule instead of only brightening —
+   readable at a glance and a better use of the brand colour. */
 .active-page {
-  background-color: #fffffff0;
+  background-color: var(--brand-500);
+  width: 1.15rem;
 }
 
 .modal-content {
@@ -83,6 +136,6 @@
   overflow-x: hidden;
   max-width: 100%;
   max-height: calc(85vh - 4em);
-  padding: 5px;
+  padding: 2px;
   box-sizing: border-box;
 }

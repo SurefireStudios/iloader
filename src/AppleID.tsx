@@ -252,7 +252,9 @@ export const AppleID = ({
                   </label>
                 </div>
               )}
-              <button type="submit">{t("apple_id.login")}</button>
+              <button type="submit" className="btn-primary">
+                {t("apple_id.login")}
+              </button>
               {addAccountOpen && storedIds.length > 0 && (
                 <button
                   onClick={() => {

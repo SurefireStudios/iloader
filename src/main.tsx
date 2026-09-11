@@ -22,6 +22,6 @@ ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
         </ErrorProvider>
       </StoreProvider>
     </PlatformProvider>
-    <Toaster richColors expand />
+    <Toaster richColors expand theme="dark" position="bottom-right" />
   </React.StrictMode>,
 );

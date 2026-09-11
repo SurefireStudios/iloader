@@ -28,6 +28,8 @@
   justify-content: space-between;
   align-items: center;
   gap: 1rem;
+  /* Room for the modal's close button, which overlaps this corner. */
+  padding-right: 1.9rem;
 }
 
 .error-more-details {

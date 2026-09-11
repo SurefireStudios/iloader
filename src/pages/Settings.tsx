@@ -244,10 +244,10 @@ export const Settings = ({
                 initialTopMostItemIndex={filteredLogs.length - 1}
                 itemContent={(_index, log) => (
                   <div className="log-entry">
-                    <span style={{ color: "gray" }}>[{log.timestamp}]</span>{" "}
+                    <span className="log-timestamp">[{log.timestamp}]</span>{" "}
                     {getHtmlForLevel(log.level)}{" "}
                     {log.target ? (
-                      <span style={{ color: "#aaa" }}>{log.target}</span>
+                      <span className="log-target">{log.target}</span>
                     ) : (
                       ""
                     )}{" "}
@@ -299,19 +299,24 @@ export const Settings = ({
 };
 
 // convert level to a properly colored html string
+//
+// These were the CSS named colours (purple, blue, green, ...). Against the
+// log viewer's near-black background `blue` (#0000FF) and `green` (#008000)
+// sit at roughly 2:1 contrast and are genuinely hard to read, so the levels
+// now use palette tokens tuned for a dark surface.
 function getHtmlForLevel(level: LogLevel) {
   switch (level) {
     case LogLevel.Trace:
-      return <span style={{ color: "purple" }}>[TRACE]</span>;
+      return <span className="log-level log-trace">[TRACE]</span>;
     case LogLevel.Debug:
-      return <span style={{ color: "blue" }}>[DEBUG]</span>;
+      return <span className="log-level log-debug">[DEBUG]</span>;
     case LogLevel.Info:
-      return <span style={{ color: "green" }}>[INFO]</span>;
+      return <span className="log-level log-info">[INFO]</span>;
     case LogLevel.Warn:
-      return <span style={{ color: "orange" }}>[WARN]</span>;
+      return <span className="log-level log-warn">[WARN]</span>;
     case LogLevel.Error:
-      return <span style={{ color: "red" }}>[ERROR]</span>;
+      return <span className="log-level log-error">[ERROR]</span>;
     default:
-      return <span>[UNKNOWN]</span>;
+      return <span className="log-level">[UNKNOWN]</span>;
   }
 }

@@ -304,8 +304,9 @@ function App() {
               <span className="section-hint">{t("app.choose_build")}</span>
             </div>
             <GlassCard className="panel">
-              <div className="action-row single-row">
+              <div className="installer-grid">
                 <button
+                  className="btn-accent"
                   onClick={() => {
                     if (!ensuredLoggedIn() || !ensureSelectedDevice()) return;
                     startOperation(installSideStoreOperation, {
@@ -334,6 +335,7 @@ function App() {
                   {t("app.sidestore_nightly")}
                 </button>
                 <button
+                  className="btn-accent"
                   onClick={() => {
                     if (!ensuredLoggedIn() || !ensureSelectedDevice()) return;
                     startOperation(installLiveContainerOperation, {
@@ -362,6 +364,7 @@ function App() {
                   {t("app.livecontainer_sidestore_nightly")}
                 </button>
                 <button
+                  className="installer-import btn-dashed"
                   onClick={async () => {
                     if (!ensuredLoggedIn() || !ensureSelectedDevice()) return;
                     let path = await openFileDialog({
