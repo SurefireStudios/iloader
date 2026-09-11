@@ -1,6 +1,8 @@
 name: AppImage Wayland probe
 
 on:
+  push:
+    branches: [appimage-probe]
   workflow_dispatch:
 
 jobs:
