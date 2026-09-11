@@ -1,0 +1,42 @@
+name: AppImage Wayland probe
+
+on:
+  workflow_dispatch:
+
+jobs:
+  probe:
+    runs-on: ubuntu-22.04
+    steps:
+      - name: Fetch the released AppImage
+        run: |
+          curl -fsSL -o app.AppImage \
+            https://github.com/nab138/iloader/releases/download/v2.3.3/iloader-linux-amd64.AppImage
+          chmod +x app.AppImage
+          ls -la app.AppImage
+
+      - name: Extract
+        run: |
+          ./app.AppImage --appimage-extract > /dev/null
+          echo "extracted $(find squashfs-root -type f | wc -l) files"
+
+      - name: Does it bundle wayland libraries?
+        run: |
+          echo "=== bundled *wayland* files ==="
+          find squashfs-root -iname '*wayland*' -printf '%s\t%p\n' | sort -rn || echo "NONE FOUND"
+          echo
+          echo "=== full bundled lib list ==="
+          find squashfs-root -name '*.so*' -printf '%f\n' | sort
+
+      - name: What does the system provide instead?
+        run: |
+          echo "=== system libwayland ==="
+          ls -la /usr/lib/x86_64-linux-gnu/libwayland-client.so* 2>/dev/null || echo "none"
+          dpkg -l | grep -i wayland || true
+
+      - name: Version comparison
+        run: |
+          for f in $(find squashfs-root -iname 'libwayland-client.so*' -type f); do
+            echo "bundled : $f"
+            readlink -f "$f" || true
+            strings "$f" | grep -iE '^wayland[_-]?[0-9]' | head -5 || true
+          done
